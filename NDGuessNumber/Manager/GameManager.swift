@@ -12,7 +12,7 @@ class GameManager {
     static let sharedInstance = GameManager()
     
     /// 問題數字陣列
-    var questionNumbers: [Int] = [Int](repeating: 0, count: 4)
+    var questionNumbers: [String] = [String](repeating: "0", count: 4)
     
     /// 建立一個新的題目
     func makeNewQuestionNumbers() {
@@ -26,14 +26,14 @@ class GameManager {
     /// - Parameters:
     ///   - answer: 答案數字陣列
     /// - Returns: 比對結果
-    func getResult(answer: [Int]) -> String {
+    func getResult(answer: [String]) -> (a: Int, b: Int) {
         
         print("A: \(answer)")
         
         let a = checkA(question: questionNumbers, answer: answer)
         let b = checkB(question: questionNumbers, answer: answer)
         
-        return "\(a) A \(b) B"
+        return (a, b)
     }
     
     // MARK: - Private
@@ -47,7 +47,7 @@ class GameManager {
     ///   - question: 問題數字陣列
     ///   - answer: 答案數字陣列
     /// - Returns: 幾個數字包含，位置也相同
-    private func checkA(question: [Int], answer: [Int]) -> Int {
+    private func checkA(question: [String], answer: [String]) -> Int {
         
         // 計數器
         var sameCount = 0
@@ -67,7 +67,7 @@ class GameManager {
     ///   - question: 問題數字陣列
     ///   - answer: 答案數字陣列
     /// - Returns: 幾個數字包含，但位置不同
-    private func checkB(question: [Int], answer: [Int]) -> Int {
+    private func checkB(question: [String], answer: [String]) -> Int {
         
         // 計數器
         var sameCount = 0
@@ -90,12 +90,12 @@ class GameManager {
     ///   - maxNumber: 亂數最大值
     ///   - listSize: 數字數量
     /// - Returns: 亂數陣列
-    private func getRandomNumbers(maxNumber: Int, listSize: Int)-> [Int] {
+    private func getRandomNumbers(maxNumber: Int, listSize: Int)-> [String] {
         
-        var randomNumbers = [Int]()
+        var randomNumbers = [String]()
 
         while randomNumbers.count < listSize {
-            let randomNumber = Int(arc4random_uniform(UInt32(maxNumber + 1)))
+            let randomNumber: String = "\(Int(arc4random_uniform(UInt32(maxNumber + 1))))"
             
             // 不重複才加進 randomNumbers
             if !randomNumbers.contains(randomNumber) {
